@@ -19,16 +19,16 @@ variable "location" {
   default     = "West Europe"
 }
 
-variable "app_department" {
+variable "app_scope" {
   description = ""
   type        = string
-  default     = "it"
+  default     = "common"
 }
 
 variable "app_prefix" {
   description = ""
   type        = string
-  default     = "pkd"
+  default     = "as"
 }
 
 variable "app_environment" {

@@ -14,10 +14,9 @@ This module creates a simple CI/CD App Service for Azure. The idea is that you s
 
 * The DNS domain you use must be managed in Azure
 * You have to buy the certificate :(
+* No App Service Slots
 
-## Full examples
-
-Creates everything.
+## Full example
 
 ```hcl
 resource "azurerm_app_service_plan" "plan" {
@@ -66,3 +65,10 @@ That's it.
 
 * `dns_rg` is optional and defaults to `rg` if not given
 * if you specify `ssl_cert_pfx_blob` then `https_only` is automatically enabled on the service
+* the app service's name is always something like `<prefix>-<scope>-<name>-<tag>`, with ...
+  * `<prefix>` defaults to `as` (for `appservice`, right? ;)
+  * `<scope>` defaults to `common`
+  * `<name>` is the name you specified
+  * `<tag>` will be a random string with by default 3 letters
+  * **WHY** do I do this? cause the name must be unique world-wide, this is the way I ensure it
+* the DNS entry will only be the `<name>` part, of course :) , but that can be overridden.
