@@ -32,6 +32,16 @@ resource "azurerm_app_service_plan" "plan" {
   }
 }
 
+
+resource "azurerm_app_service_certificate" "cert" {
+  name                = "my-cert"
+  location            = "West Europe"
+  resource_group_name = "my-resourcegroup"
+  pfx_blob            = filebase64("${path.root}/my-azure-managed-domain-cert.pfx")
+  password            = "some-really-badass-password"
+}
+
+
 module "myappservice" {
   # this is local development
   source = "../modules/az/simple-appservice"
@@ -47,8 +57,7 @@ module "myappservice" {
   dns_ttl     = 300
 
   # optional
-  ssl_cert_pfx_blob = filebase64("${path.root}/my-azure-managed-domain-cert.pfx")
-  ssl_cert_pfx_pass = "some-really-badass-password"
+  ssl_cert_thumbprint = azurerm_app_service_certificate.cert.thumbprint
 
   app_environment = merge(
     # MAKE ABSOLUTELY SURE THERE IS AT LEAST ONE ENTRY IN EACH OF THE YAML FILES!!
@@ -64,7 +73,7 @@ That's it.
 ### Notes
 
 * `dns_rg` is optional and defaults to `rg` if not given
-* if you specify `ssl_cert_pfx_blob` then `https_only` is automatically enabled on the service
+* if you specify `ssl_cert_thumbprint` then `https_only` is automatically enabled on the service
 * the app service's name is always something like `<prefix>-<scope>-<name>-<tag>`, with ...
   * `<prefix>` defaults to `as` (for `appservice`, right? ;)
   * `<scope>` defaults to `common`

@@ -15,7 +15,7 @@ resource "azurerm_app_service" "service" {
   resource_group_name = var.rg
   app_service_plan_id = var.app_plan_id
   app_settings        = var.app_environment
-  https_only          = var.ssl_cert_pfx_blob != "" ? true : null
+  https_only          = var.ssl_cert_thumbprint != "" ? true : null
 
   site_config {
     scm_type         = var.site_scm_type != "" ? var.site_scm_type : null

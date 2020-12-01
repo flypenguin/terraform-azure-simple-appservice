@@ -74,13 +74,7 @@ variable "tag_length" {
   default     = 3
 }
 
-variable "ssl_cert_pfx_blob" {
-  description = ""
-  type        = string
-  default     = ""
-}
-
-variable "ssl_cert_pfx_pass" {
+variable "ssl_cert_thumbprint" {
   description = ""
   type        = string
   default     = ""

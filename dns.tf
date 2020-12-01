@@ -11,8 +11,8 @@ resource "azurerm_app_service_custom_hostname_binding" "binding" {
   resource_group_name = var.rg
   app_service_name    = azurerm_app_service.service.name
   hostname            = local.dns_fqdn
-  ssl_state           = var.ssl_cert_pfx_blob != "" ? var.ssl_state : null
-  thumbprint          = var.ssl_cert_pfx_blob != "" ? azurerm_app_service_certificate.cert[0].thumbprint : null
+  ssl_state           = var.ssl_cert_thumbprint != "" ? var.ssl_state : null
+  thumbprint          = var.ssl_cert_thumbprint != "" ? var.ssl_cert_thumbprint : null
 }
 
 resource "azurerm_dns_cname_record" "cname" {
