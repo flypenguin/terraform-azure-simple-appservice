@@ -16,7 +16,6 @@ variable "rg" {
 variable "location" {
   description = ""
   type        = string
-  default     = "West Europe"
 }
 
 variable "app_scope" {
